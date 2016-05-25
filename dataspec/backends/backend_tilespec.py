@@ -7,6 +7,7 @@ from dataspec import Tilespec, BoundingBox, LoaderCannotReadException
 from dataspec.utils import url_to_file
 import json
 import os
+import re
 
 class TSTilespec(Tilespec):
     '''JSON tilespec backend'''
@@ -83,15 +84,26 @@ def load_tilespec(path):
         for ts in tss:
             yield TSTilespec(ts)
 
-def load(path):
+def load(path, check=False):
     '''Load all tilespecs in the given directory or single tilespec
     
     :param path: path to tilespec
+    :param check: True to only check if it appears to be a tilespec
     '''
+    pattern = "W\\d{2}_Sec\\d{3}.json"
+    def matches(filename):
+        return re.match(pattern, filename) is not None
     if os.path.isdir(path):
+        filenames = filter(matches, os.listdir(path))
+        if check:
+            return len(filenames) > 0
         return [load_tilespec(os.path.join(path, filename))
-                for filename in os.listdir(path)]
+                for filename in filenames]
     elif os.path.isfile(path):
+        if check:
+            return matches(os.path.split(path)[-1])
         return [load_tilespec(path)]
     else:
+        if check:
+            return False
         raise LoaderCannotReadException()

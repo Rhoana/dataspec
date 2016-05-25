@@ -39,10 +39,29 @@ def load(path):
     for entry_point in working_set.iter_entry_points(DATASPEC_GROUP):
         if loader_name is not None and entry_point.name != loader_name:
             continue
-        fn = entry_point.resolve()
+        fn = entry_point.load()
         result = fn(path)
-        if result is not None:
+        if result is not None and len(result) > 0:
             return result
     raise NotImplementedError("No loader for tilespec %s" % path)
 
-all = [DATASPEC_GROUP, load, set_loader_name]
+
+def can_load(path):
+    '''Given a path name, see if it points at a tilespec
+
+    :param path: the URL of the tilespec to be loaded
+    :returns: True if it appears that the path points at something we can load.
+    '''
+
+    working_set = pkg_resources.WorkingSet()
+    for entry_point in working_set.iter_entry_points(DATASPEC_GROUP):
+        if loader_name is not None and entry_point.name != loader_name:
+            continue
+        fn = entry_point.load()
+        result = fn(path, check=True)
+        if result:
+            return True
+    else:
+        return False
+
+all = [DATASPEC_GROUP, can_load, load, set_loader_name]

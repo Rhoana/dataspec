@@ -2,6 +2,7 @@
 
 
 class BoundingBox(object):
+
     def __init__(self, x0, x1, y0, y1):
         '''Initialize the bounding box
 

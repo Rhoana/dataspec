@@ -1,6 +1,6 @@
 from boundingbox import BoundingBox
 from tilespec import Tilespec
-from loader import load, set_loader_name, DATASPEC_GROUP
+from loader import can_load, load, set_loader_name, DATASPEC_GROUP
 import utils
 
 
@@ -11,5 +11,5 @@ class LoaderCannotReadException(Exception):
     it is unable to read tilespecs from the given path
     '''
     pass
-all = [DATASPEC_GROUP, load, set_loader_name, utils, BoundingBox,
+all = [DATASPEC_GROUP, can_load, load, set_loader_name, utils, BoundingBox,
        LoaderCannotReadException, Tilespec]

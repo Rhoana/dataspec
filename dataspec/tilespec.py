@@ -5,6 +5,7 @@ class Tilespec(object):
     '''Abstract tilespec
 
     '''
+
     def get_bounding_box(self):
         '''Get the bounding box around the tile
 
