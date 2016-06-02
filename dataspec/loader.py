@@ -57,7 +57,7 @@ def can_load(path):
     for entry_point in working_set.iter_entry_points(DATASPEC_GROUP):
         if loader_name is not None and entry_point.name != loader_name:
             continue
-        fn = entry_point.load()
+        fn = entry_point.load(require=False)
         result = fn(path, check=True)
         if result:
             return True

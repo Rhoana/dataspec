@@ -19,6 +19,6 @@ setuptools.setup(
         "numpy>=1.6"
     ],
     name="dataspec",
-    packages=["dataspec"],
+    packages=["dataspec", "dataspec.backends"],
     url="https://github.com/Rhoana/dataspec",
     version=VERSION)
