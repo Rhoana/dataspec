@@ -2,7 +2,7 @@ import setuptools
 
 from dataspec.loader import DATASPEC_GROUP
 
-VERSION = "1.1.0"
+VERSION = "1.1.2"
 
 setuptools.setup(
     description="Tilespec data model",
