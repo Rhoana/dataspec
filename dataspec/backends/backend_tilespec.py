@@ -33,7 +33,8 @@ class TSTilespec(Tilespec):
                 (mipmap_level, repr(self)))
         w = 2**(mipmap_level - best_level)
         with url_to_file(image_url) as filename:
-            img = cv2.imread(filename, flags=cv2.IMREAD_GRAYSCALE)
+            img = cv2.imread(
+                filename, flags=cv2.IMREAD_GRAYSCALE | cv2.IMREAD_ANYDEPTH)
             if bounding_box is None:
                 return img[::w, ::w]
             return img[bounding_box.y0:bounding_box.y1:w,
